@@ -3,5 +3,6 @@ extra-package-dbs: []
 packages:
 - '.'
 extra-deps:
-- vector-random-0.1
-resolver: lts-8.6
+- vector-random-0.2
+- mersenne-random-1.0.0.1
+resolver: lts-11.3

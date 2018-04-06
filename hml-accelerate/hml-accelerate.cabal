@@ -1,0 +1,90 @@
+name:                   hml-accelerate
+version:                0.1.0.0
+-- synopsis:
+-- description:
+homepage:               https://github.com/jhoxray/hml-accelerate#readme
+license:                BSD3
+license-file:           LICENSE
+author:                 J X-Ray Ho
+maintainer:             jho.xray@gmail.com
+copyright:              Copyright: (c) 2016 J X-Ray Ho
+category:               languages
+build-type:             Simple
+extra-source-files:     README.md
+cabal-version:          >=1.10
+
+flag llvm-cpu
+  description:          Enable the LLVM backend for multicore CPUs
+  default:              True
+
+flag llvm-ptx
+  description:          Enable the LLVM backend for NVIDIA CUDA GPUs
+  default:              True
+
+library
+  default-language:     Haskell2010
+  hs-source-dirs:       src
+
+  exposed-modules:
+        Lib
+      , FFNN
+      , ShallowNN
+      , AccelerateCore.Base
+
+  build-depends:
+        base                        >= 4.7 && < 5
+      , accelerate                  >= 1.0
+      , mwc-random-accelerate
+      , accelerate-blas
+
+executable hml-accelerate-exe
+  default-language:     Haskell2010
+  hs-source-dirs:       app
+  main-is:              Main.hs
+
+  build-depends:
+        base
+      , hml-accelerate
+      , accelerate
+      , mwc-random-accelerate
+      , accelerate-blas
+
+  ghc-options:
+      -O2
+      -threaded
+      -rtsopts
+
+  if flag(llvm-cpu)
+    cpp-options:
+        -DACCELERATE_LLVM_NATIVE_BACKEND
+
+    build-depends:
+        accelerate-llvm-native      >= 1.0
+
+  if flag(llvm-ptx)
+    cpp-options:
+        -DACCELERATE_LLVM_PTX_BACKEND
+
+    build-depends:
+        accelerate-llvm-ptx         >= 1.0
+
+test-suite hml-accelerate-test
+  default-language:     Haskell2010
+  type:                 exitcode-stdio-1.0
+  hs-source-dirs:       test
+  main-is:              Test.hs
+
+  build-depends:
+        base
+      , hml-accelerate
+
+  ghc-options:
+      -O2
+      -threaded
+      -rtsopts
+
+source-repository head
+  type:     git
+  location: https://github.com/jhoxray/hml-accelerate
+
+-- vim: nospell

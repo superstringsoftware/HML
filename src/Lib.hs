@@ -46,4 +46,4 @@ dotV9 v1 v2 = U.ifoldM' func 0 v2
   where func acc i el = pure $ acc + el * (v1 U.! i)
 
 sigmoid :: Floating a => a -> a
-sigmoid x = 1 / (1 + exp (-x)) * 3
+sigmoid x = 1 / (1 + exp (-x))

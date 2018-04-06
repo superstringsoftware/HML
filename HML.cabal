@@ -16,6 +16,7 @@ cabal-version:       >=1.10
 library
   hs-source-dirs:      src
   exposed-modules:     Lib
+                     , HML.Base.Algebra
   ghc-options:         -O2 -fllvm
   build-depends:       base >= 4.7 && < 5
                      , vector
