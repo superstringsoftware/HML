@@ -64,7 +64,8 @@ main = do
 #ifdef ACCELERATE_LLVM_PTX_BACKEND
   printf "result with PTX backend: dotp xs ys = %s\n" (show (PTX.runN dotp xs ys))
 #endif
-
+  
+  printf "\n\n"
   testComputeZ
 
 
@@ -86,6 +87,9 @@ testComputeZ = do
     printf "b = %s\n\n" (show b)
     
     printf "w = %s\n\n" (show w)
+
+    printf "the function to execute:\n"
+    printf "%s\n\n" (show computeZ)
     
 #ifdef ACCELERATE_LLVM_NATIVE_BACKEND
     printf "result with CPU backend: computeZ w a b = %s\n" (show (CPU.runN computeZ w a b))
